@@ -7,7 +7,7 @@ const contentSecurityPolicy = `
   script-src 'self' 'unsafe-eval';
   style-src 'self' 'unsafe-inline';
   connect-src 'self' api.umami.is app.mosanic.io mosanic.io localhost:3000 app.localhost:3000;
-  frame-ancestors 'self' app.mosanic.io mosanic.io localhost:3000 app.localhost:3000;
+  frame-ancestors *;
 `;
 // {
 //   key: 'X-Frame-Options',
