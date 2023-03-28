@@ -6,18 +6,18 @@ const contentSecurityPolicy = `
   img-src *;
   script-src 'self' 'unsafe-eval';
   style-src 'self' 'unsafe-inline';
-  connect-src 'self' api.umami.is;
-  frame-ancestors 'self';
+  connect-src 'self' api.umami.is app.mosanic.io mosanic.io localhost:3000 app.localhost:3000;
+  frame-ancestors 'self' app.mosanic.io mosanic.io localhost:3000 app.localhost:3000;
 `;
+// {
+//   key: 'X-Frame-Options',
+//   value: '*/',
+// }
 
 const headers = [
   {
     key: 'X-DNS-Prefetch-Control',
     value: 'on',
-  },
-  {
-    key: 'X-Frame-Options',
-    value: 'SAMEORIGIN',
   },
   {
     key: 'Content-Security-Policy',
