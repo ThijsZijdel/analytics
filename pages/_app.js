@@ -21,7 +21,9 @@ const Intl = ({ children }) => {
 };
 
 export default function App({ Component, pageProps }) {
-  const { basePath } = useRouter();
+  const { basePath, asPath, query } = useRouter();
+  let hideHeader = (query?.preview ? !query?.preview : true) && asPath.split('/')?.[1] === 'share';
+
   const { dir } = useLocale();
 
   return (
@@ -38,7 +40,7 @@ export default function App({ Component, pageProps }) {
         <meta name="theme-color" content="#2f2f2f" media="(prefers-color-scheme: dark)" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div className="container" dir={dir}>
+      <div className={hideHeader ? 'share' : 'container'} dir={dir}>
         <Component {...pageProps} />
       </div>
     </Intl>

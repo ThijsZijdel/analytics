@@ -25,6 +25,7 @@ import usePageQuery from 'hooks/usePageQuery';
 import { DEFAULT_ANIMATION_DURATION } from 'lib/constants';
 import styles from './WebsiteDetails.module.css';
 import EventDataButton from 'components/common/EventDataButton';
+import { useRouter } from 'next/router';
 
 const messages = defineMessages({
   pages: { id: 'metrics.pages', defaultMessage: 'Pages' },
@@ -52,7 +53,15 @@ const views = {
   query: QueryParametersTable,
 };
 
+const WrapPage = ({ hideHeader, children }) => (hideHeader ? children : <Page>{children}</Page>);
+const WrapLayout = ({ hideHeader, children }) => (
+  hideHeader ? children : <GridLayout>{children}</GridLayout>
+);
+
 export default function WebsiteDetails({ websiteId }) {
+  const { query } = useRouter();
+  let hideHeader = query?.preview ? !query?.preview : true;
+
   const { data } = useFetch(`/websites/${websiteId}`);
   const [chartLoaded, setChartLoaded] = useState(false);
   const [countryData, setCountryData] = useState();
@@ -136,10 +145,11 @@ export default function WebsiteDetails({ websiteId }) {
   }
 
   return (
-    <Page>
+    <WrapPage hideHeader={hideHeader}>
       <div className="row">
         <div className={classNames(styles.chart, 'col')}>
           <WebsiteChart
+            hideHeader={hideHeader}
             websiteId={websiteId}
             title={data.name}
             domain={data.domain}
@@ -151,7 +161,7 @@ export default function WebsiteDetails({ websiteId }) {
         </div>
       </div>
       {chartLoaded && !view && (
-        <GridLayout>
+        <WrapLayout hideHeader={hideHeader}>
           <GridRow>
             <GridColumn md={12} lg={6}>
               <PagesTable {...tableProps} />
@@ -188,7 +198,7 @@ export default function WebsiteDetails({ websiteId }) {
               <EventsChart className={styles.eventschart} websiteId={websiteId} />
             </GridColumn>
           </GridRow>
-        </GridLayout>
+        </WrapLayout>
       )}
       {view && chartLoaded && (
         <MenuLayout
@@ -207,6 +217,6 @@ export default function WebsiteDetails({ websiteId }) {
           />
         </MenuLayout>
       )}
-    </Page>
+    </WrapPage>
   );
 }

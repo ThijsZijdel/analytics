@@ -4,19 +4,23 @@ import Layout from 'components/layout/Layout';
 import WebsiteDetails from 'components/pages/WebsiteDetails';
 import useShareToken from 'hooks/useShareToken';
 
+const WrapLayout = ({ hideHeader, children }) => (hideHeader ? children : <Layout>{children}</Layout>);
+
 export default function SharePage() {
   const router = useRouter();
-  const { id } = router.query;
+  const { id, preview } = router.query;
   const shareId = id?.[0];
   const shareToken = useShareToken(shareId);
+  let hideHeader = preview ? !preview : true;
+
 
   if (!shareToken) {
     return null;
   }
-
+ 
   return (
-    <Layout>
+    <WrapLayout hideHeader={hideHeader}>
       <WebsiteDetails websiteId={shareToken.id} />
-    </Layout>
+    </WrapLayout>
   );
 }

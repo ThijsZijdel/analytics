@@ -22,6 +22,7 @@ export default function WebsiteChart({
   stickyHeader = false,
   showLink = false,
   showChart = true,
+  hideHeader = false,
   onDataLoad = () => {},
 }) {
   const [dateRange, setDateRange] = useDateRange(websiteId);
@@ -81,7 +82,9 @@ export default function WebsiteChart({
 
   return (
     <div className={styles.container}>
-      <WebsiteHeader websiteId={websiteId} title={title} domain={domain} showLink={showLink} />
+      {!hideHeader && (
+        <WebsiteHeader websiteId={websiteId} title={title} domain={domain} showLink={showLink} />
+      )}
       <div className={classNames(styles.header, 'row')}>
         <StickyHeader
           className={classNames(styles.metrics, 'col row')}

@@ -13,6 +13,7 @@ import useConfig from 'hooks/useConfig';
 import useUser from 'hooks/useUser';
 import Logo from 'assets/logo.svg';
 import styles from './Header.module.css';
+import Image from 'next/image';
 
 export default function Header() {
   const { user } = useUser();
@@ -25,9 +26,8 @@ export default function Header() {
     <>
       {allowUpdate && <UpdateNotice />}
       <header className={classNames(styles.header, 'row')}>
-        <div className={styles.title}>
-          <Icon icon={<Logo />} size="large" className={styles.logo} />
-          <Link href={isSharePage ? HOMEPAGE_URL : '/'}>umami</Link>
+        <div className={styles.title} style={{fontWeight: '900'}}>
+          <Link href={isSharePage ? 'https://mosanic.io' : '/'}>Mosanic</Link>
         </div>
 
         {user && (
