@@ -89,6 +89,7 @@ export default function WebsiteChart({
         <StickyHeader
           className={classNames(styles.metrics, 'col row')}
           stickyClassName={styles.sticky}
+          // style={{padding}}
           enabled={stickyHeader}
         >
           <FilterTags
